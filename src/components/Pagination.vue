@@ -1,15 +1,15 @@
  <template>
     <section>
         <p class="pagination-container" > 
-            <i class="fa fa-angle-double-left" style="color: #2997ff;"/>
-            <i class="fa fa-angle-left" style="color: #2997ff;"/>
+            <i class="moved fa fa-angle-double-left" @click="changePage(0)"/>
+            <i class="moved fa fa-angle-left"  @click="changePage(-1)"/>
             <span class="inner-pagination-content">
                 <span class="pagination-separator">|</span>
                     Showing Page {{ page }} of Pages {{ pages }}
                 <span class="pagination-separator">|</span>    
             </span>
-            <i class="fa fa-angle-right" style="color: #2997ff;"/>
-            <i class="fa fa-angle-double-right" style="color: #2997ff;"/>
+            <i class="moved fa fa-angle-right" @click="changePage(1)"/>
+            <i class="moved fa fa-angle-double-right" @click="changePage(pages)"/>
         </p>
     </section>    
 </template>
@@ -35,6 +35,18 @@ export default {
             else{
                 return this.totalRecords / this.perPage 
             }
+        }
+    }, 
+    methods: {
+        changePage(val) {
+            switch (val){
+                case 0: this.page = 1; break;
+                case -1: this.page = this.page > 1 ? this.page - 1 : this.page; break;
+                case 1: this.page = this.page < this.pages ? this.page + 1: this.page; break; 
+                case this.pages: this.page = this.pages; break;
+            }
+
+            this.$emit('input', {page: this.page})
         }
     }
 }
@@ -64,14 +76,16 @@ export default {
         }
     }
 
-    .fa{
+    .moved{
         width: 40px;
         text-align: center;
         color: #2997ff;
-        background-color: orange;
+        // background-color: orange;
         display: flex;
         align-items: center;
         justify-content: center;
+        padding-top: 2.4px;
+        cursor: pointer;
     }
 
 </style>

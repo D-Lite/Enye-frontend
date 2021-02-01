@@ -1,7 +1,10 @@
 <template>
     <div class="container">
        <div class="col-sm-12" style="display:flex; justify-content:flex-end">
-            <Pagination :totalRecords="list.length" :perPageOptions = "[20,50, 100]" />
+            <Pagination 
+            :totalRecords="list.length" 
+            :perPageOptions = "perPageOptions"
+            v-model="pagination" />
        </div>
         <h1>Records</h1>
         <div class="col-sm-11">
@@ -14,6 +17,7 @@
                 placeholder="Search for any record using their Email, First Name or Username" 
                 aria-label="Recipient's username"
                 v-model="query"
+                
                 />
         </div>
         <table class="table table-hover table-bordered container" style="margin-top: 20px">
@@ -50,7 +54,10 @@
 
 <script>
 import axios from 'axios'
-import Pagination from './Pagination'
+import Pagination from './Pagination';
+
+const perPageOptions = [20, 50, 100]
+
 
 export default {
     name: "Records",
@@ -59,8 +66,10 @@ export default {
     },
     data(){
         return {list: [],
-        query: ''}        
-
+        query: '',
+        perPageOptions,
+        pagination: { page: 1,   perPage: perPageOptions[0] },
+        };
     },
     mounted(){
         let url = 'https://api.enye.tech/v1/challenge/records';
@@ -70,11 +79,10 @@ export default {
             // console.warn(res.data.records.profiles)
         })
     },
-    // blog- item, blogs-list
     computed: {
         filteredList: function(){
             return this.list.filter((item)=>{
-                return (item.FirstName.toLowerCase().match(this.query) || item.UserName.toLowerCase().match(this.query) || item.Email.toLowerCase().match(this.query));
+                return (item.FirstName.toLowerCase().match(this.query.toLowerCase()) || item.UserName.toLowerCase().match(this.query.toLowerCase()) || item.Email.toLowerCase().match(this.query.toLowerCase()));
             })
         }
     } 
@@ -85,6 +93,7 @@ export default {
     .searchinput{
         width: 100%;
         height: 35px;
+        // text-transform: lowercase;
 
         background-color: #ffffff;
         box-shadow: 2px 2px 8px 0px rgba(0, 0, 0, 0.2);
