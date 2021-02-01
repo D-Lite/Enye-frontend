@@ -1,0 +1,7 @@
+{
+    "name": "Daniel Olabemiwo",
+    "description" : "I am a Software Engineer with knowledge in vueJS, PHP. I also write and publish on writing platforms. ",
+    "project": "Enye FRONTEND task",
+    "projectdescription": "The purpose is to gauge your understanding of working with JSON data with various RESTful APIs. In this challenge, we provide a sample API with a single endpoint and ask you to write some Javascript to request data from the API and transform the response.",
+    "picture": "url('../../assets/mylogo.png')"
+} 
